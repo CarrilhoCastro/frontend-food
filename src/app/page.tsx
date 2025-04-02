@@ -8,43 +8,44 @@ import { cookies } from 'next/headers'
 
 export default function Page(){
 
-  async function handleLogin(formData:FormData){
+  async function handleLogin(formData: FormData){
     "use server"
 
-    const email = formData.get("email")
-    const password = formData.get("password")
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
-    if(email === "" || password === ""){
+    if(!email || !password){
       return;
     }
 
-    try{
+    try {
       const response = await api.post("/session", {
         email,
         password
-      })
+      });
 
-      if(!response.data.token){
+      if (!response.data.token) {
         return;
       }
 
       console.log(response.data);
 
-      const expressTime = 60 * 60 * 24 * 30 * 1000;
-      const cookieStore = await cookies();
-      cookieStore.set("session", response.data.token,{
+      const cookieStore = await cookies(); 
+      const expressTime = 60 * 60 * 24 * 30; 
+
+      cookieStore.set("session", response.data.token, {
         maxAge: expressTime,
         path: "/",
-        httpOnly: false,
+        httpOnly: true,
         secure: process.env.NODE_ENV === "production"
-      })
+      });
 
-    }catch(err){
+    } catch(err) {
       console.log(err);
       return;
     }
 
-    redirect("/dashboard")
+    redirect("/dashboard");
   }
 
   return(
