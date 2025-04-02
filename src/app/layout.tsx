@@ -6,8 +6,8 @@ import { Toaster } from 'sonner'
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Sujeito Pizza - A melhor pizzaria",
-  description: "A melhor pizzaria do Brasil",
+  title: "Projeto Food",
+  description: "Projeto de Feito por Pedro Carrilho",
 };
 
 export default function RootLayout({
