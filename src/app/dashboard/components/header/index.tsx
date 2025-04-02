@@ -1,25 +1,26 @@
-"use client"
+"use client";
 
-import Link from 'next/link'
-import styles from './styles.module.scss'
-import Image from 'next/image'
-import logoImg from '/public/logo.svg'
-import { LogOutIcon } from 'lucide-react'
-import { deleteCookie } from 'cookies-next'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
+import Link from "next/link";
+import styles from "./styles.module.scss";
+import Image from "next/image";
+import { LogOutIcon } from "lucide-react";
+import { deleteCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-export function Header(){
+const logoImg = "/logo.svg";
+
+export function Header() {
   const router = useRouter();
 
-  async function handleLogout(){
-    deleteCookie("session", { path: "/" } )
-    toast.success("Logout feito com sucesso!")
-    
-    router.replace("/")
+  async function handleLogout() {
+    deleteCookie("session", { path: "/" });
+    toast.success("Logout feito com sucesso!");
+
+    router.replace("/");
   }
 
-  return(
+  return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>
         <Link href="/dashboard">
@@ -34,20 +35,14 @@ export function Header(){
         </Link>
 
         <nav>
-          <Link href="/dashboard/category">
-            Categoria
-          </Link>
-          <Link href="/dashboard/product">
-            Produto
-          </Link>
+          <Link href="/dashboard/category">Categoria</Link>
+          <Link href="/dashboard/product">Produto</Link>
 
-          <form action={handleLogout}>
-            <button type='submit'>
-              <LogOutIcon size={24} color="#FFF" />
-            </button>
-          </form>
+          <button onClick={handleLogout}>
+            <LogOutIcon size={24} color="#FFF" />
+          </button>
         </nav>
       </div>
     </header>
-  )
+  );
 }
